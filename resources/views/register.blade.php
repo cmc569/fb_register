@@ -25,6 +25,29 @@
 <body>
     <div class="facebook_messenger">
         <h1 class="fb_register"><img src="img/messenger_logo.png">帳號註冊系統</h1>
+
+        @if ($alert = Session::get('success'))
+        <p>{{ $alert }}<a href="{{ route('logout') }}">（登入）</a></p>
+        <script>
+        Swal.fire({
+            type: '成功',
+            title: '提示',
+            text: '{{ $alert }}'
+        });
+        </script>
+
+        @elseif ($alert = Session::get('fail'))
+        <p>{{ $alert }}<a href="{{ route('register') }}">（重新建立）</a></p>
+        <script>
+        Swal.fire({
+            type: '失敗',
+            title: '提示',
+            text: '{{ $alert }}'
+        });
+        </script>
+
+        @else
+        
         <p>★請輸入帳號資訊</p>
         <form method="POST" id="form1">
             {{ csrf_field() }}
@@ -55,6 +78,9 @@
 
             <a href="#" class="btn-binding" onclick="login()">登入</a>
         </form>
+
+        @endif
+
     </div>
        
     <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>

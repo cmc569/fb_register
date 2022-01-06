@@ -34,7 +34,7 @@ class UserController extends Controller
         if ($this->userService->login($request['email'], $request['password'])) {
             return redirect()->route('fb.index');
         } else {
-            return redirect()->route('login');
+            return redirect()->route('login')->with('alert', '帳號密碼輸入錯誤');
         }
     }
 
@@ -68,8 +68,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $result = $this->userService->register($request['name'], $request['email'], $request['password']);
-        // dd($result);
-        return 'login';
+        // return empty($result) ? 'Fail' : 'Success';
+        if ($result) {
+            \Session::flash('success', '帳號建立完成'); 
+            return view('register');
+        }
+
+        \Session::flash('fail', '帳號建立失敗'); 
+        return view('register');
     }
 
     /**

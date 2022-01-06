@@ -59,18 +59,13 @@
 </body>
 
 <script type="text/javascript">
-<?php
-if (!empty($_SESSION['alert'])) {
-?>
-        Swal.fire({
-            type: "錯誤",
-            title: "提示",
-            text: "<?=$_SESSION['alert']?>"
-        }) ;
-<?php
-    unset($_SESSION['alert']);
-}
-?>
+@if ($alert = Session::get('alert'))
+Swal.fire({
+    type: "錯誤",
+    title: "提示",
+    text: "{{ $alert }}"
+}) ;
+@endif
 
 $(document).ready(function() {
 
